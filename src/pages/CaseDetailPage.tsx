@@ -3,12 +3,15 @@ import { useParams } from 'react-router-dom';
 import { Card, Table, Upload, Button, message, Modal, type UploadFile } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { getCaseDetail, uploadCaseFile } from '../api';
+import { formatSize } from '../utils/utils';
 
 interface FileItem {
   id: number;
   name: string;
   url: string;
-  upload_time: number;
+  create_date: number;
+  size: number;
+  status: number;
 }
 
 const CaseDetailPage: React.FC = () => {
@@ -80,15 +83,30 @@ const CaseDetailPage: React.FC = () => {
       title: '文件名',
       dataIndex: 'name',
       key: 'name',
+      width: 300,
+      ellipsis: true,
       render: (text: string, record: FileItem) => (
         <a href={record.url} target="_blank" rel="noopener noreferrer">{text}</a>
       )
     },
     {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 200,
+      render: (val: number) => val === 1 ? '已处理' : '处理中'
+    },
+    {
       title: '上传时间',
-      dataIndex: 'upload_time',
-      key: 'upload_time',
+      dataIndex: 'create_date',
+      key: 'create_date',
       render: (val: number) => new Date(val * 1000).toLocaleString()
+    },
+    {
+      title: '文件大小',
+      dataIndex: 'size',
+      key: 'size',
+      render: (val: number) => formatSize(val)
     }
   ];
 
