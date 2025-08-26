@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Table, Upload, Button, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Card, Table, Upload, Button, message, Modal, type UploadFile } from 'antd';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { getCaseDetail, uploadCaseFile } from '../api';
 
 interface FileItem {
@@ -16,6 +16,8 @@ const CaseDetailPage: React.FC = () => {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const fetchFiles = async (id: string) => {
     setLoading(true);
@@ -35,15 +37,37 @@ const CaseDetailPage: React.FC = () => {
     }
   }, [id]);
 
-  const handleUpload = async (info: any) => {
+  // 打开弹窗
+  const openModal = () => setModalVisible(true);
+  // 关闭弹窗
+  const closeModal = () => {
+    setModalVisible(false);
+    setFileList([]);
+  };
+  // 受控 fileList
+  const handleChange = ({ fileList }: any) => setFileList(fileList);
+  // 阻止自动上传
+  const beforeUpload = (file: UploadFile) => {
+    setFileList(prev => [...prev, file]);
+    return false;
+  };
+  // 批量上传
+  const handleBatchUpload = async () => {
+    if (!fileList.length) {
+      message.warning('请先选择文件');
+      return;
+    }
     setUploading(true);
     try {
       const formData = new FormData();
       formData.append('lawcase_id', id as string);
-      formData.append('files', info.file);
+      fileList.forEach((file: UploadFile) => {
+        formData.append('files', file.originFileObj as File);
+      });
       await uploadCaseFile(formData);
       message.success('上传成功');
       fetchFiles(id as string);
+      closeModal();
     } catch (error) {
       message.error('上传失败');
     } finally {
@@ -70,20 +94,35 @@ const CaseDetailPage: React.FC = () => {
 
   return (
     <div className="page-container">
-      <Card title={`文件信息`}>
-        <Upload
-          customRequest={({ file, onSuccess, onError }) => {
-            handleUpload({ file })
-              .then(() => onSuccess && onSuccess({}, file))
-              .catch(onError);
-          }}
-          showUploadList={false}
-          disabled={uploading}
+      <Card title={`文件信息`} extra={<Button type="primary" icon={<UploadOutlined />} onClick={openModal}>上传文件</Button>}>
+        <Modal
+          title="批量上传文件"
+          open={modalVisible}
+          onCancel={closeModal}
+          destroyOnHidden
+          footer={[
+            <Button key="cancel" onClick={closeModal}>取消</Button>,
+            <Button key="upload" type="primary" loading={uploading} onClick={handleBatchUpload}>上传</Button>
+          ]}
         >
-          <Button icon={<UploadOutlined />} loading={uploading} type="primary" style={{ marginBottom: 16 }}>
-            上传文件
-          </Button>
-        </Upload>
+          <Upload.Dragger
+            multiple
+            fileList={fileList}
+            beforeUpload={beforeUpload}
+            onChange={handleChange}
+            onRemove={file => {
+              setFileList(prev => prev.filter(f => f.uid !== file.uid));
+            }}
+            showUploadList
+            style={{ minHeight: 180 }}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{ fontSize: 40, color: '#1890ff' }} />
+            </p>
+            <p className="ant-upload-text">点击或拖拽文件到此区域上传</p>
+            <p className="ant-upload-hint">支持批量选择或拖拽上传，上传前可删除文件</p>
+          </Upload.Dragger>
+        </Modal>
         <Table
           columns={columns}
           dataSource={files}

@@ -1,7 +1,11 @@
 import api from './request';
 
 export const uploadCaseFile = (data: FormData) => {
-  return api.post('/resource/upload', data);
+  return api.post('/resource/upload', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 }
 
 export const getCaseDetail = (lawcase_id: string) => {
