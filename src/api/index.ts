@@ -1,5 +1,13 @@
 import api from './request';
 
+export const uploadCaseFile = (data: FormData) => {
+  return api.post('/resource/upload', data);
+}
+
+export const getCaseDetail = (lawcase_id: string) => {
+  return api.get(`/resource/list`, { params: { lawcase_id } });
+}
+
 export const getCaseList = () => {
   return api.get('/lawcase/list');
 };

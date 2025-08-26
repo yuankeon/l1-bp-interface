@@ -105,7 +105,7 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[location.pathname.startsWith('/facts') || location.pathname.startsWith('/zip-facts') ? '/facts' : location.pathname.startsWith('/zip-detail') ? '/zip-list' : location.pathname]}
+          selectedKeys={[location.pathname.startsWith('/case') ? '/' : location.pathname.startsWith('/prompt') ? '/prompt' : location.pathname]}
           style={{
             borderRight: 0,
             marginTop: '8px',
@@ -176,7 +176,7 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
         }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/case" element={<CaseDetailPage />} />
+            <Route path="/case/:id" element={<CaseDetailPage />} />
             <Route path="/prompt" element={<PromptPage />} />
           </Routes>
         </Content>
