@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Form, Input, Select, message, Card, Modal } from 'antd';
 import { addCase, getCaseList, type AddCaseParams } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 // 案件类型定义
 export interface CaseItem {
@@ -9,6 +10,7 @@ export interface CaseItem {
   createdAt: string;
   remark: string;
   create_date: number;
+  id: number; // 假设后端返回 id 字段
 }
 
 const caseTypeOptions = [
@@ -19,14 +21,19 @@ const HomePage: React.FC = () => {
   const [cases, setCases] = useState<CaseItem[]>([]);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const navigate = useNavigate();
 
   const fetchCaseList = async () => {
     try {
+      setDataLoading(true);
       const res = await getCaseList();
       setCases(res.data.list);
     } catch (error) {
       message.error('获取案件列表失败');
+    } finally {
+      setDataLoading(false);
     }
   };
 
@@ -66,6 +73,7 @@ const HomePage: React.FC = () => {
       key: 'name'
     },
     {
+      width: 200,
       title: '创建时间',
       dataIndex: 'create_date',
       key: 'create_date',
@@ -75,6 +83,15 @@ const HomePage: React.FC = () => {
       title: '备注',
       dataIndex: 'remark',
       key: 'remark'
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (_: any, record: CaseItem) => (
+        <Button style={{ padding: 0 }} type="link" onClick={() => navigate(`/case/${record.id}`)}>
+          查看
+        </Button>
+      )
     }
   ];
 
@@ -84,7 +101,8 @@ const HomePage: React.FC = () => {
         <Table
           columns={columns}
           dataSource={cases}
-          rowKey={(record) => record.createdAt + record.name}
+          rowKey="id"
+          loading={dataLoading}
           pagination={false}
         />
       </Card>

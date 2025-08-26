@@ -12,6 +12,7 @@ import {
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PromptPage from './pages/PromptPage';
+import CaseDetailPage from './pages/CaseDetailPage';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -29,7 +30,6 @@ const menuItems = [
     label: 'Prompt',
   }
 ];
-
 
 interface UserInfo {
   name: string;
@@ -176,6 +176,7 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
         }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/case" element={<CaseDetailPage />} />
             <Route path="/prompt" element={<PromptPage />} />
           </Routes>
         </Content>
