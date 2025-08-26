@@ -4,6 +4,7 @@ import { Card, Table, Upload, Button, message, Modal, type UploadFile } from 'an
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { getCaseDetail, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
+import { usePagination } from '../hooks/usePagination';
 
 interface FileItem {
   id: number;
@@ -21,6 +22,8 @@ const CaseDetailPage: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const { pagination, pagedData, setPagination } = usePagination(files);
 
   const fetchFiles = async (id: string) => {
     setLoading(true);
@@ -83,7 +86,7 @@ const CaseDetailPage: React.FC = () => {
       title: '文件名',
       dataIndex: 'name',
       key: 'name',
-      width: 300,
+      width: 400,
       ellipsis: true,
       render: (text: string, record: FileItem) => (
         <a href={record.url} target="_blank" rel="noopener noreferrer">{text}</a>
@@ -100,6 +103,7 @@ const CaseDetailPage: React.FC = () => {
       title: '上传时间',
       dataIndex: 'create_date',
       key: 'create_date',
+      width: 300,
       render: (val: number) => new Date(val * 1000).toLocaleString()
     },
     {
@@ -143,10 +147,22 @@ const CaseDetailPage: React.FC = () => {
         </Modal>
         <Table
           columns={columns}
-          dataSource={files}
+          dataSource={pagedData}
           rowKey="id"
           loading={loading}
-          pagination={false}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: files.length,
+            showSizeChanger: true,
+            showTotal: (total) => `共 ${total} 条文件`,
+            onChange: (page, pageSize) => {
+              setPagination({
+                current: page,
+                pageSize: pageSize,
+              });
+            },
+          }}
         />
       </Card>
     </div>

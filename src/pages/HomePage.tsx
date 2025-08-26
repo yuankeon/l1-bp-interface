@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Form, Input, Select, message, Card, Modal } from 'antd';
 import { addCase, getCaseList, type AddCaseParams } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { usePagination } from '../hooks/usePagination';
 
 // 案件类型定义
 export interface CaseItem {
@@ -24,6 +25,8 @@ const HomePage: React.FC = () => {
   const [dataLoading, setDataLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const navigate = useNavigate();
+
+  const { pagination, pagedData, setPagination } = usePagination(cases);
 
   const fetchCaseList = async () => {
     try {
@@ -100,10 +103,22 @@ const HomePage: React.FC = () => {
       <Card title="案件列表" extra={<Button type="primary" onClick={() => setModalVisible(true)}>新增案件</Button>}>
         <Table
           columns={columns}
-          dataSource={cases}
+          dataSource={pagedData}
           rowKey="id"
           loading={dataLoading}
-          pagination={false}
+          pagination={{
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: cases.length,
+            showSizeChanger: true,
+            showTotal: (total) => `共 ${total} 条案件`,
+            onChange: (page, pageSize) => {
+              setPagination({
+                current: page,
+                pageSize: pageSize,
+              });
+            },
+          }}
         />
       </Card>
       <Modal
