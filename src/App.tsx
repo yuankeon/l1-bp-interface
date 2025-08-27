@@ -6,6 +6,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   FilePptOutlined,
+  FileWordOutlined
 } from '@ant-design/icons';
 
 // 导入页面组件
@@ -25,9 +26,14 @@ const menuItems = [
     label: '案件管理',
   },
   {
-    key: '/prompt',
+    key: '/materials',
     icon: <FilePptOutlined />,
-    label: 'Prompt',
+    label: 'Materials',
+  },
+  {
+    key: '/l1-workflow',
+    icon: <FileWordOutlined />,
+    label: 'L1 Workflow',
   }
 ];
 

@@ -1,0 +1,166 @@
+{
+  "1": {
+    "title": "1 Executive Summary"
+  },
+  "2": {
+    "title": "2 Chinese Parent Company’s Summary",
+    "children": [
+      {
+        "title": "2.1 Company Summary"
+      },
+      {
+        "title": "2.2 Parent Company’s Internal Organization"
+      },
+      {
+        "title": "2.3 Need for the Beneficiary’s Presence in the U.S. Company"
+      }
+    ]
+  },
+  "3": {
+    "title": "3 U.S. Company’s Summary",
+    "children": [
+      {
+        "title": "3.1 Ownership"
+      },
+      {
+        "title": "3.2 Location"
+      }
+    ]
+  },
+  "4": {
+    "title": "4 Investment"
+  },
+  "5": {
+    "title": "5 Business and Product/Service Description",
+    "children": [
+      {
+        "title": "5.1 Business Description"
+      },
+      {
+        "title": "5.2 Product/Service Categories"
+      }
+    ]
+  },
+  "6": {
+    "title": "6 Industry and Market Analysis",
+    "children": [
+      {
+        "title": "6.1 Industry Analysis",
+        "children": [
+          {
+            "title": "6.1.1 xxxx Industry in the U.S."
+          }
+        ]
+      },
+      {
+        "title": "6.2 Market Analysis and Need for Products",
+        "children": [
+          {
+            "title": "6.2.1 xxx Market Trends in the U.S."
+          }
+        ]
+      },
+      {
+        "title": "6.3 ??????",
+        "children": [
+          {
+            "title": "6.3.2 Location-Based Market Analysis"
+          },
+          {
+            "title": "6.3.3 Major Markets"
+          },
+          {
+            "title": "6.3.4 The Company's Targets"
+          }
+        ]
+      },
+      {
+        "title": "6.4 SWOT Analysis"
+      }
+    ]
+  },
+  "7": {
+    "title": "7 Competition Analysis Table",
+    "children": [
+      {
+        "title": "7.1 Competitive Advantages"
+      }
+    ]
+  },
+  "8": {
+    "title": "8 Marketing and Competitive Features"
+  },
+  "9": {
+    "title": "9 Key Management and Personnel",
+    "children": [
+      {
+        "title": "9.1 Chief Executive Officer (CEO): Ms. A"
+      },
+      {
+        "title": "9.x Other Company Members"
+      },
+      {
+        "title": "9.6 Personnel Plan"
+      },
+      {
+        "title": "9.7 Personnel Summary"
+      },
+      {
+        "title": "9.8 U.S. Internal Organizational Chart – Year 1"
+      },
+      {
+        "title": "9.9 Timetable (Year 1)"
+      }
+    ]
+  },
+  "10": {
+    "title": "10 Financials",
+    "children": [
+      {
+        "title": "10.1 Break-Even Analysis",
+        "children": [
+          {
+            "title": "10.1.1 Break-Even Analysis Table"
+          },
+          {
+            "title": "10.1.2 Monthly Break-Even Analysis for Year 1"
+          }
+        ]
+      },
+      {
+        "title": "10.2 Sales Forecast"
+      },
+      {
+        "title": "10.3 Profit and Loss",
+        "children": [
+          {
+            "title": "10.3.1 Profit and Loss Table"
+          },
+          {
+            "title": "10.3.2 Profit and Loss Chart"
+          }
+        ]
+      },
+      {
+        "title": "10.4 Feasibility",
+        "children": [
+          {
+            "title": "10.4.1 Feasibility Analysis"
+          },
+          {
+            "title": "10.4.2 Cost/Benefit Analysis"
+          },
+          {
+            "title": "10.4.3 The Company’s Impact on the U.S. Economy"
+          }
+        ]
+      },
+      {
+        "title": "10.5 Balance Sheet"
+      }
+    ]
+  },
+  "11": {
+    "title": "11 Conclusion"
+  }
+}
