@@ -5,6 +5,7 @@ import { UploadOutlined, InboxOutlined, ReloadOutlined } from '@ant-design/icons
 import { getCaseDetail, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
 import { usePagination } from '../hooks/usePagination';
+import { getFileStatusText } from '../utils/const';
 
 interface FileItem {
   id: number;
@@ -102,7 +103,7 @@ const CaseDetailPage: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       width: 150,
-      render: (val: number) => val === 1 ? '已处理' : '处理中'
+      render: (val: number) => getFileStatusText(val)
     },
     {
       title: '上传时间',
