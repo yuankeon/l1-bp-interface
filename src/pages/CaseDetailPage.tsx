@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Card, Table, Upload, Button, message, Modal, type UploadFile, Space } from 'antd';
 import { UploadOutlined, InboxOutlined, ReloadOutlined } from '@ant-design/icons';
-import { getCaseDetail, uploadCaseFile } from '../api';
+import { getCaseDetail, startMaterialsGeneration, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
 import { usePagination } from '../hooks/usePagination';
 import { getFileStatusText } from '../utils/const';
@@ -86,8 +86,15 @@ const CaseDetailPage: React.FC = () => {
   };
 
   const handleStart = async () => {
-    // TODO: 调用生成 L1 BP 材料的接口
+    if (!id) return;
+    const res = await startMaterialsGeneration(id);
+    console.log(res);
     message.success('L1 BP 材料生成已启动！');
+  };
+
+  const navigate = useNavigate();
+  const handleViewResult = () => {
+    navigate(`/materials/${id}`);
   };
 
   const columns = [
@@ -190,7 +197,7 @@ const CaseDetailPage: React.FC = () => {
               >
                 启动 L1 BP 材料撰写
               </Button>
-              <Button>
+              <Button onClick={handleViewResult}>
                 查看结果
               </Button>
             </Space>

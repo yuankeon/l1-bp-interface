@@ -1,5 +1,15 @@
 import api from './request';
 
+
+/**
+ * 启动 L1 BP 材料撰写
+ * @param data 
+ * @returns 
+ */
+export const startMaterialsGeneration = (id: string) => {
+  return api.post('/lawcase/start', { id });
+}
+
 export const uploadCaseFile = (data: FormData) => {
   return api.post('/resource/upload', data, {
     headers: {
