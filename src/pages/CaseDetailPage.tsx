@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Table, Upload, Button, message, Modal, type UploadFile } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { UploadOutlined, InboxOutlined, ReloadOutlined } from '@ant-design/icons';
 import { getCaseDetail, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
 import { usePagination } from '../hooks/usePagination';
@@ -13,6 +13,7 @@ interface FileItem {
   create_date: number;
   size: number;
   status: number;
+  content: string;
 }
 
 const CaseDetailPage: React.FC = () => {
@@ -22,6 +23,8 @@ const CaseDetailPage: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewContent, setPreviewContent] = useState('');
 
   const { pagination, pagedData, setPagination } = usePagination(files);
 
@@ -81,22 +84,24 @@ const CaseDetailPage: React.FC = () => {
     }
   };
 
+  const handleStart = async () => {
+    // TODO: 调用生成 L1 BP 材料的接口
+    message.success('L1 BP 材料生成已启动！');
+  };
+
   const columns = [
     {
       title: '文件名',
       dataIndex: 'name',
       key: 'name',
-      width: 400,
+      width: 300,
       ellipsis: true,
-      render: (text: string, record: FileItem) => (
-        <a href={record.url} target="_blank" rel="noopener noreferrer">{text}</a>
-      )
     },
     {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      width: 200,
+      width: 150,
       render: (val: number) => val === 1 ? '已处理' : '处理中'
     },
     {
@@ -110,13 +115,94 @@ const CaseDetailPage: React.FC = () => {
       title: '文件大小',
       dataIndex: 'size',
       key: 'size',
+      width: 200,
       render: (val: number) => formatSize(val)
+    },
+    {
+      title: '',
+      key: 'action',
+      render: (_: any, record: FileItem) => (
+        <Button
+          size="small"
+          onClick={() => {
+            setPreviewContent(record.content || '无内容');
+            setPreviewVisible(true);
+          }}
+        >
+          查看
+        </Button>
+      )
     }
   ];
 
   return (
     <div className="page-container">
-      <Card title={`文件信息`} extra={<Button type="primary" icon={<UploadOutlined />} onClick={openModal}>上传文件</Button>}>
+      {/* 启动区美观卡片 */}
+      <Card
+        style={{
+          margin: '0 auto 40px auto',
+          maxWidth: 520,
+          boxShadow: '0 4px 24px 0 rgba(0,0,0,0.07)',
+          borderRadius: 18,
+          border: 'none',
+          textAlign: 'center',
+          background: 'linear-gradient(135deg, #f0f5ff 0%, #e6fffb 100%)',
+        }}
+      >
+        <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 12, color: '#222' }}>
+          L1 BP 材料撰写启动区
+        </div>
+        <div style={{ fontSize: 16, color: '#555', marginBottom: 18 }}>
+          请先上传以下必需文件（原始材料）：
+        </div>
+        <div style={{ fontSize: 17, fontWeight: 500, color: '#1890ff', marginBottom: 24, lineHeight: 1.8 }}>
+          01 L1_original_information.txt<br />
+          02 L1_core_narrative_info.txt<br />
+          04 L1_market_research.txt
+        </div>
+        <Button
+          type="primary"
+          style={{
+            width: 240,
+            height: 48,
+            fontWeight: 700,
+            fontSize: 18,
+            borderRadius: 24,
+            background: 'linear-gradient(90deg, #52c41a 0%, #1890ff 100%)',
+            border: 'none',
+            boxShadow: '0 2px 8px 0 rgba(24,144,255,0.10)'
+          }}
+          onClick={handleStart}
+        >
+          启动 L1 BP 材料撰写
+        </Button>
+      </Card>
+
+      {/* 文件信息区 */}
+      <Card
+        title={<span style={{ fontWeight: 600, fontSize: 18 }}>文件信息</span>}
+        extra={
+          <div style={{ display: 'flex', gap: 10 }}>
+            <Button type="primary" icon={<UploadOutlined />} onClick={openModal}>上传文件</Button>
+            <Button icon={<ReloadOutlined />} onClick={() => {
+              if (id) {
+                fetchFiles(id);
+              }
+            }}>刷新</Button>
+          </div>
+        }
+      >
+        <Modal
+          open={previewVisible}
+          title="内容预览"
+          footer={null}
+          onCancel={() => setPreviewVisible(false)}
+          width={1000}
+        >
+          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all', maxHeight: '80vh', overflow: 'auto' }}>
+            {previewContent}
+          </pre>
+        </Modal>
         <Modal
           title="批量上传文件"
           open={modalVisible}
