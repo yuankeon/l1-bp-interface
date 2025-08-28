@@ -12,8 +12,9 @@ import {
 // 导入页面组件
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-import PromptPage from './pages/PromptPage';
+import MaterialsPage from './pages/MaterialsPage';
 import CaseDetailPage from './pages/CaseDetailPage';
+import L1WorkflowPage from './pages/L1WorkflowPage';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -111,7 +112,12 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[location.pathname.startsWith('/case') ? '/' : location.pathname.startsWith('/prompt') ? '/prompt' : location.pathname]}
+          selectedKeys={[
+            location.pathname.startsWith('/case') ? '/' :
+              location.pathname.startsWith('/materials') ? '/materials' :
+                location.pathname.startsWith('/l1-workflow') ? '/l1-workflow' :
+                  location.pathname
+          ]}
           style={{
             borderRight: 0,
             marginTop: '8px',
@@ -183,7 +189,8 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/case/:id" element={<CaseDetailPage />} />
-            <Route path="/prompt" element={<PromptPage />} />
+            <Route path="/materials" element={<MaterialsPage />} />
+            <Route path="/l1-workflow" element={<L1WorkflowPage />} />
           </Routes>
         </Content>
       </Layout>
