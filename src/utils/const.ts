@@ -9,13 +9,3 @@ export enum L1FileStatus {
   UploadFail = -3, // 文件上传失败
   RecognitionFail = -4, // 文件识别失败
 }
-
-export const getFileStatusText = (status: L1FileStatus) => {
-  if (status < 0) {
-    return '处理失败'
-  }
-  if (status === L1FileStatus.ReadSuccess || status === L1FileStatus.RecognitionSuccess) {
-    return '识别成功'
-  }
-  return '处理中'
-}

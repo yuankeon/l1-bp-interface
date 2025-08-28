@@ -5,7 +5,7 @@ import { UploadOutlined, InboxOutlined, ReloadOutlined } from '@ant-design/icons
 import { getCaseDetail, startMaterialsGeneration, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
 import { usePagination } from '../hooks/usePagination';
-import { getFileStatusText } from '../utils/const';
+import { getTagText } from '../components/Tag';
 
 interface FileItem {
   id: number;
@@ -87,9 +87,16 @@ const CaseDetailPage: React.FC = () => {
 
   const handleStart = async () => {
     if (!id) return;
-    const res = await startMaterialsGeneration(id);
-    console.log(res);
-    message.success('L1 BP 材料生成已启动！');
+    try {
+      const res = await startMaterialsGeneration(id) as any;
+      if (res.code === 200) {
+        message.success('L1 BP 材料生成已启动！');
+      } else {
+        message.error(res.msg);
+      }
+    } catch (error) {
+      message.error('启动失败');
+    }
   };
 
   const navigate = useNavigate();
@@ -110,7 +117,7 @@ const CaseDetailPage: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       width: 150,
-      render: (val: number) => getFileStatusText(val)
+      render: (val: number) => getTagText(val)
     },
     {
       title: '上传时间',
