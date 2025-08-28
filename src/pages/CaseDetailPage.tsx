@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, Table, Upload, Button, message, Modal, type UploadFile } from 'antd';
+import { Card, Table, Upload, Button, message, Modal, type UploadFile, Space } from 'antd';
 import { UploadOutlined, InboxOutlined, ReloadOutlined } from '@ant-design/icons';
 import { getCaseDetail, uploadCaseFile } from '../api';
 import { formatSize } from '../utils/utils';
@@ -137,53 +137,71 @@ const CaseDetailPage: React.FC = () => {
 
   return (
     <div className="page-container">
-      {/* 启动区美观卡片 */}
-      <Card
-        style={{
-          margin: '0 auto 40px auto',
-          maxWidth: 520,
-          boxShadow: '0 4px 24px 0 rgba(0,0,0,0.07)',
-          borderRadius: 18,
-          border: 'none',
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, #f0f5ff 0%, #e6fffb 100%)',
-        }}
-      >
-        <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 12, color: '#222' }}>
-          L1 BP 材料撰写启动区
+      <Card style={{ marginBottom: 16 }} title="L1 BP 材料撰写">
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 32 }}>
+          {/* 左侧：必需文件说明 */}
+          <div style={{ flex: 1, minWidth: 0, textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontSize: 16, color: '#555', marginBottom: 18 }}>
+              请先上传以下必需文件（原始材料）：
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 500, color: '#1890ff', marginBottom: 0, lineHeight: 1.8 }}>
+              01 L1_original_information.txt<br />
+              02 L1_core_narrative_info.txt<br />
+              04 L1_market_research.txt
+            </div>
+            <div style={{ marginTop: 'auto' }}>
+              <Button
+                type="primary"
+                icon={<UploadOutlined />}
+                onClick={openModal}
+              >
+                上传文件
+              </Button>
+            </div>
+          </div>
+          {/* 右侧：生成材料提示和按钮 */}
+          <div style={{ flex: 1, minWidth: 0, textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ fontSize: 15, color: '#fa8c16', marginBottom: 12, fontWeight: 500 }}>
+              在确认无误之后，点击启动按钮，将自动生成以下撰写材料：
+            </div>
+            <div style={{
+              fontSize: 16,
+              color: '#222',
+              background: '#f6ffed',
+              border: '1px solid #b7eb8f',
+              borderRadius: 8,
+              padding: '12px',
+              margin: '0 0 18px 0',
+              maxWidth: 400,
+              lineHeight: 2,
+              width: '100%'
+            }}>
+              <div>- 05 L1_services_and_pricing</div>
+              <div>- 06 L1_personnel_plan</div>
+              <div>- 07 L1_operation_expenses</div>
+              <div>- 08 L1_sales_forecast</div>
+              <div>- 09 L1_personnel_and_financial</div>
+            </div>
+            <Space>
+              <Button
+                type="primary"
+                onClick={handleStart}
+              >
+                启动 L1 BP 材料撰写
+              </Button>
+              <Button>
+                查看结果
+              </Button>
+            </Space>
+          </div>
         </div>
-        <div style={{ fontSize: 16, color: '#555', marginBottom: 18 }}>
-          请先上传以下必需文件（原始材料）：
-        </div>
-        <div style={{ fontSize: 17, fontWeight: 500, color: '#1890ff', marginBottom: 24, lineHeight: 1.8 }}>
-          01 L1_original_information.txt<br />
-          02 L1_core_narrative_info.txt<br />
-          04 L1_market_research.txt
-        </div>
-        <Button
-          type="primary"
-          style={{
-            width: 240,
-            height: 48,
-            fontWeight: 700,
-            fontSize: 18,
-            borderRadius: 24,
-            background: 'linear-gradient(90deg, #52c41a 0%, #1890ff 100%)',
-            border: 'none',
-            boxShadow: '0 2px 8px 0 rgba(24,144,255,0.10)'
-          }}
-          onClick={handleStart}
-        >
-          启动 L1 BP 材料撰写
-        </Button>
       </Card>
 
       {/* 文件信息区 */}
       <Card
-        title={<span style={{ fontWeight: 600, fontSize: 18 }}>文件信息</span>}
+        title="文件信息"
         extra={
           <div style={{ display: 'flex', gap: 10 }}>
-            <Button type="primary" icon={<UploadOutlined />} onClick={openModal}>上传文件</Button>
             <Button icon={<ReloadOutlined />} onClick={() => {
               if (id) {
                 fetchFiles(id);
