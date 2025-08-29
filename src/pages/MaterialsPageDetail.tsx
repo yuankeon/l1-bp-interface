@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Card, Table, Button, message, Modal } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Card, Table, Button, message, Modal, Space } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
-import { getMaterials } from '../api';
+import { getMaterials, startMaterialsGeneration } from '../api';
 import { usePagination } from '../hooks/usePagination';
 
 interface MaterialItem {
@@ -27,7 +27,7 @@ const MaterialsDetailPage: React.FC = () => {
   const fetchMaterials = async (id: string) => {
     setLoading(true);
     try {
-      const res = await getMaterials(id);
+      const res = await getMaterials(id, 0);
       setMaterials(res.data.list);
     } catch (error) {
       message.error('获取L1 BP材料列表失败');
@@ -81,8 +81,62 @@ const MaterialsDetailPage: React.FC = () => {
     }
   ];
 
+  const handleStart = async () => {
+    if (!id) return;
+    try {
+      const res = await startMaterialsGeneration(id) as any;
+      if (res.code === 200) {
+        message.success('L1 BP 报告撰写已启动！');
+      } else {
+        message.error(res.msg);
+      }
+    } catch (error) {
+      message.error('启动失败');
+    }
+  };
+
+  const navigate = useNavigate();
+  const handleViewResult = () => {
+    navigate(`/l1-workflow/${id}`);
+  };
+
   return (
     <div className="page-container">
+      <Card style={{ marginBottom: 16 }} title="L1 BP 材料">
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 32 }}>
+          {/* 左侧：必需文件说明 */}
+          <div style={{ flex: 1, minWidth: 0, textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontSize: 16, color: '#555', marginBottom: 18 }}>
+              L1 BP 撰写材料包含以下文件：
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 0, lineHeight: 1.8 }}>
+              <div>- 05 L1_services_and_pricing</div>
+              <div>- 06 L1_personnel_plan</div>
+              <div>- 07 L1_operation_expenses</div>
+              <div>- 08 L1_sales_forecast</div>
+              <div>- 09 L1_personnel_and_financial</div>
+            </div>
+          </div>
+          {/* 右侧：生成材料提示和按钮 */}
+          <div style={{ flex: 1, minWidth: 0, textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div style={{ fontSize: 15, color: '#fa8c16', marginBottom: 12, fontWeight: 500 }}>
+              在确认无误之后，点击启动按钮，将自动开始 L1 BP 报告的撰写：
+            </div>
+            <Space>
+              <Button
+                type="primary"
+                onClick={handleStart}
+              >
+                启动 L1 BP 报告撰写
+              </Button>
+              <Button onClick={handleViewResult}>
+                查看结果
+              </Button>
+            </Space>
+          </div>
+        </div>
+      </Card>
+
       <Card
         title="L1 BP材料信息"
         extra={
