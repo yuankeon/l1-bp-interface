@@ -203,7 +203,7 @@ const CaseDetailPage: React.FC = () => {
                 type="primary"
                 onClick={handleStart}
               >
-                启动 L1 BP 材料撰写
+                启动 L1 材料撰写
               </Button>
               <Button onClick={handleViewResult}>
                 查看结果

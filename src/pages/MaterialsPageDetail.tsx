@@ -127,7 +127,7 @@ const MaterialsDetailPage: React.FC = () => {
                 type="primary"
                 onClick={handleStart}
               >
-                启动 L1 BP 报告撰写
+                启动 L1 BP 正文撰写
               </Button>
               <Button onClick={handleViewResult}>
                 查看结果
