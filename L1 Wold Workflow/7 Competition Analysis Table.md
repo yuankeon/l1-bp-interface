@@ -1,3 +1,12 @@
+=== CORE NARRATIVE INFO ===
+{{L1_core_narrative_info}}
+
+=== MARKET RESEARCH ===
+{{L1_market_research}}
+
+=== INDUSTRY REPORT ===
+{{L1_industry_report}}
+
 I am currently helping the client to write a L1 VISA Business Plan, and the above information was submitted by the client, and the analysis of the Industry & Market.
 
 According to the information submitted by the user, there is information about competing products.

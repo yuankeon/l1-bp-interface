@@ -1,3 +1,9 @@
+=== ORIGINAL INFORMATION ===
+{{L1_original_information}}
+
+=== CORE NARRATIVE INFO ===
+{{L1_core_narrative_info}}
+
 I am currently helping the client to write a L1 VISA Business Plan, and the above information was submitted by the client.
 I need your help in writing "Executive Summary" section.
 This section should provide a comprehensive overview of both parent and subsidiary companies, their relationship, and the purpose of establishing the US operation. It must clearly identify the beneficiary and explain their role in the US company. The Executive Summary should introduce the US subsidiary, outline its ownership structure, business focus, and projected financials. It should also introduce the beneficiary, highlighting their current role in the parent company and future position in the US operation. This section is crucial as it provides immigration officers with a quick understanding of the business relationship and transfer purpose.

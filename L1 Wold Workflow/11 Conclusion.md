@@ -1,3 +1,12 @@
+=== ORIGINAL INFORMATION ===
+{{L1_original_information}}
+
+=== CORE NARRATIVE INFO ===
+{{L1_core_narrative_info}}
+
+=== SALES FORECAST ===
+{{L1_sales_forecast}}
+
 This section must summarize key points supporting the visa application. It should summarize the company's business model, relationship with the parent company, growth projections, and the beneficiary's leadership role. It should emphasize how the company will leverage the parent company's expertise to succeed in the US market. This conclusion reinforces the key arguments for approving the L1 visa application.
 Guidance:
 1. Check the established date

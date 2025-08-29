@@ -162,7 +162,8 @@ const CaseDetailPage: React.FC = () => {
             <div style={{ fontSize: 16, fontWeight: 500, color: '#1890ff', marginBottom: 0, lineHeight: 1.8 }}>
               01 L1_original_information.txt<br />
               02 L1_core_narrative_info.txt<br />
-              04 L1_market_research.txt
+              04 L1_market_research.txt<br/>
+              10 L1_industry_report.txt
             </div>
             <div style={{ marginTop: 'auto' }}>
               <Button
