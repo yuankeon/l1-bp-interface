@@ -2,6 +2,15 @@ import api from './request';
 
 
 /**
+ * 获取L1 BP材料
+ * @param id 案件id
+ * @returns 材料列表
+ */
+export const getMaterials = (lawcase_id: string) => {
+  return api.get(`/material/list`, { params: { lawcase_id } });
+}
+
+/**
  * 启动 L1 BP 材料撰写
  * @param data 
  * @returns 
