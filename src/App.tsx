@@ -16,6 +16,7 @@ import MaterialsPage from './pages/MaterialsPage';
 import CaseDetailPage from './pages/CaseDetailPage';
 import L1WorkflowPage from './pages/L1WorkflowPage';
 import MaterialsDetailPage from './pages/MaterialsPageDetail';
+import L1WoldDetail from './pages/L1WoldDetail';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -193,6 +194,7 @@ const AppContent: React.FC<{ logout: () => void, userInfo: UserInfo }> = ({ logo
             <Route path="/materials" element={<MaterialsPage />} />
             <Route path="/materials/:id" element={<MaterialsDetailPage />} />
             <Route path="/l1-workflow" element={<L1WorkflowPage />} />
+            <Route path="/l1-workflow/:id" element={<L1WoldDetail />} />
           </Routes>
         </Content>
       </Layout>
